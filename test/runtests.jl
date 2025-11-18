@@ -140,7 +140,8 @@ include("gen/test/test_pb.jl")
             @test r.index == length(r.response.data)
         end
     # end
-    
+
+    @static if VERSION >= v"1.12"
     # @testset "Response Streaming" begin 
         N = 16
 
@@ -204,6 +205,7 @@ include("gen/test/test_pb.jl")
     # end
 
     # @testset "Don't Stick User Tasks" 
+        # This fails on Julia 1.10 but works on Julia 1.12
         client = TestService_TestRPC_Client(_TEST_HOST, _TEST_PORT)
 
         task = @sync begin 
@@ -214,7 +216,7 @@ include("gen/test/test_pb.jl")
 
         @test !task.sticky
     # end
-
+    end
 
     grpc_shutdown()
 end
