@@ -89,13 +89,6 @@ def serve(public: bool = False):
         server.add_insecure_port(bind_address)
 
     server.start()
-
-    if os.path.exists('/test/.healthcheck'):
-        try:
-            open('/test/.healthy', 'w')
-        except:
-            pass
-
     server.wait_for_termination()
 
 
